@@ -1,0 +1,63 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+public class TrainApp {
+
+    public static void main(String[] args) {
+
+        // Step 1: Welcome Message
+        System.out.println("=== Train Consist Management App ===");
+
+        // Step 2: Train consist (List for order)
+        List<String> train = new ArrayList<>();
+
+        // Step 3: Unique Bogie IDs (Set for uniqueness)
+        Set<String> bogieIds = new HashSet<>();
+
+        // ---------------- UC3 START ----------------
+
+        System.out.println("\nAdding Bogie IDs...");
+
+        addBogie("S1", train, bogieIds);
+        addBogie("S2", train, bogieIds);
+        addBogie("S1", train, bogieIds); // Duplicate
+        addBogie("A1", train, bogieIds);
+
+        // Display final train consist
+        System.out.println("\nFinal Train Consist:");
+        displayTrain(train);
+
+        // Display unique IDs
+        System.out.println("\nUnique Bogie IDs:");
+        System.out.println(bogieIds);
+
+        // ---------------- UC3 END ----------------
+    }
+
+    // Method to add bogie with uniqueness check
+    public static void addBogie(String id, List<String> train, Set<String> bogieIds) {
+
+        if (bogieIds.add(id)) { // returns false if duplicate
+            train.add(id);
+            System.out.println("Added Bogie: " + id);
+        } else {
+            System.out.println("Duplicate Bogie ID ignored: " + id);
+        }
+    }
+
+    // Display method
+    public static void displayTrain(List<String> train) {
+
+        System.out.println("\n--- Train Consist Summary ---");
+
+        if (train.isEmpty()) {
+            System.out.println("No bogies attached.");
+        } else {
+            for (int i = 0; i < train.size(); i++) {
+                System.out.println("Bogie " + (i + 1) + ": " + train.get(i));
+            }
+        }
+    }
+}
