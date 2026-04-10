@@ -1,0 +1,48 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+// Bogie Class
+class Bogie {
+    int bogieId;
+    String type;
+    int capacity;
+
+    // Constructor
+    Bogie(int bogieId, String type, int capacity) {
+        this.bogieId = bogieId;
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    // Display Method
+    void display() {
+        System.out.println("Bogie ID: " + bogieId +
+                           ", Type: " + type +
+                           ", Capacity: " + capacity);
+    }
+}
+
+// Main Class
+public class UC8_FilterBogies {
+    public static void main(String[] args) {
+
+        // Reusing list (as from UC7)
+        List<Bogie> bogies = new ArrayList<>();
+
+        bogies.add(new Bogie(101, "Sleeper", 72));
+        bogies.add(new Bogie(102, "AC", 50));
+        bogies.add(new Bogie(103, "General", 90));
+        bogies.add(new Bogie(104, "Chair Car", 60));
+
+        // Stream + Filter
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)   // Condition
+                .collect(Collectors.toList());
+
+        // Display Result
+        System.out.println("Filtered Bogies (Capacity > 60):");
+        for (Bogie b : filteredBogies) {
+            b.display();
+        }
+    }
+}
