@@ -1,0 +1,54 @@
+import java.util.*;
+import java.util.stream.Collectors;
+
+// Bogie Class
+class Bogie {
+    int bogieId;
+    String type;
+    int capacity;
+
+    Bogie(int bogieId, String type, int capacity) {
+        this.bogieId = bogieId;
+        this.type = type;
+        this.capacity = capacity;
+    }
+}
+
+public class UC13_PerformanceComparison {
+    public static void main(String[] args) {
+
+        List<Bogie> bogies = new ArrayList<>();
+
+        // Create sample data
+        for (int i = 1; i <= 100000; i++) {
+            bogies.add(new Bogie(i, "Type" + (i % 3), (i % 100) + 20));
+        }
+
+        // 🔹 Loop-Based Filtering
+        long startLoop = System.nanoTime();
+
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
+
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // 🔹 Stream-Based Filtering
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // Display Results
+        System.out.println("Loop Execution Time (ns): " + loopTime);
+        System.out.println("Stream Execution Time (ns): " + streamTime);
+    }
+}
