@@ -1,0 +1,58 @@
+import java.util.*;
+
+// 🔹 Custom Exception Class
+class InvalidCapacityException extends Exception {
+    public InvalidCapacityException(String message) {
+        super(message);
+    }
+}
+
+// 🔹 Passenger Bogie Class
+class PassengerBogie {
+    int bogieId;
+    String type;
+    int capacity;
+
+    // Constructor with validation
+    PassengerBogie(int bogieId, String type, int capacity) throws InvalidCapacityException {
+        if (capacity <= 0) {
+            throw new InvalidCapacityException("Capacity must be greater than 0!");
+        }
+        this.bogieId = bogieId;
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    void display() {
+        System.out.println("Bogie ID: " + bogieId +
+                           ", Type: " + type +
+                           ", Capacity: " + capacity);
+    }
+}
+
+// 🔹 Main Class
+public class UC14_CustomException {
+    public static void main(String[] args) {
+
+        List<PassengerBogie> train = new ArrayList<>();
+
+        try {
+            // Valid bogie
+            PassengerBogie b1 = new PassengerBogie(301, "Sleeper", 72);
+            train.add(b1);
+
+            // Invalid bogie (will throw exception)
+            PassengerBogie b2 = new PassengerBogie(302, "AC", -10);
+            train.add(b2);  // This line will not execute
+
+        } catch (InvalidCapacityException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        // Display valid bogies only
+        System.out.println("\nValid Bogies in Train:");
+        for (PassengerBogie b : train) {
+            b.display();
+        }
+    }
+}
