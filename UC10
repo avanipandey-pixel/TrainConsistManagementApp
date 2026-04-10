@@ -1,0 +1,38 @@
+import java.util.*;
+import java.util.stream.*;
+
+// Bogie Class
+class Bogie {
+    int bogieId;
+    String type;
+    int capacity;
+
+    // Constructor
+    Bogie(int bogieId, String type, int capacity) {
+        this.bogieId = bogieId;
+        this.type = type;
+        this.capacity = capacity;
+    }
+}
+
+// Main Class
+public class UC10_TotalCapacity {
+    public static void main(String[] args) {
+
+        // Reusing Bogie List (like UC7)
+        List<Bogie> bogies = new ArrayList<>();
+
+        bogies.add(new Bogie(101, "Sleeper", 72));
+        bogies.add(new Bogie(102, "AC", 50));
+        bogies.add(new Bogie(103, "General", 90));
+        bogies.add(new Bogie(104, "Chair Car", 60));
+
+        // Stream + map + reduce
+        int totalCapacity = bogies.stream()
+                .map(b -> b.capacity)        // Extract capacity
+                .reduce(0, Integer::sum);    // Sum all values
+
+        // Display Result
+        System.out.println("Total Seating Capacity: " + totalCapacity);
+    }
+}
